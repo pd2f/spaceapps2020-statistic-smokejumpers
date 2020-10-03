@@ -14,5 +14,5 @@ RUN pip3 install --upgrade setuptools
 ADD ./requirements.txt ./
 ADD ./*.py ./
 RUN pip3 install -r requirements.txt
-EXPOSE 1000
+EXPOSE 5000
 CMD python ./main.py
