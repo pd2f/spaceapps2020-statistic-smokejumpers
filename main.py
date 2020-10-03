@@ -2,6 +2,7 @@ import werkzeug
 from flask import Flask, jsonify, abort, redirect, url_for, request
 from flask_restplus import Api, Resource, reqparse
 import os
+import Ativo as atv
 
 app = Flask(__name__)
 # api = Api(app)
@@ -46,11 +47,13 @@ ativo_endpoint = rest_app.namespace('ativo',
 @ativo_endpoint.route("/<int:id>")
 class cadastro_ativo(Resource):
     def post(self,id):
-        json_data = request.get_json(force=True)
-        return jsonify(json_data)
+        #json_data = request.get_json(force=True)
+        json_data="teste_mock"
+        ret = atv.cadastrar_ativo(id,json_data)
+        return jsonify(mensagem=ret)
 
     def get(self,id):
-        return jsonify(id=id)
+        return  atv.inferencia(id)
 
 incendio_endpoint = rest_app.namespace('incendio',
                                     description='Esse endpoint é utilizado para investigação da causa raiz do incêndio')
