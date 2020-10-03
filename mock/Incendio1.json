@@ -1,13 +1,5 @@
 {
 	"data": "2020-10-05 10:25",
 	"ranking": 5,
-	"projecao": "reduzida",
-	"distancia":20.5,
-	"geometry": {
-		"type": "Point",
-		"coordinates": [
-			-58.24873,
-			-2.78076
-		]
-	}
+	"projecao": "reduzida"
 }

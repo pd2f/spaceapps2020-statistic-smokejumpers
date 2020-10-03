@@ -3,5 +3,11 @@ flask_restful
 Werkzeug==0.16.1
 gunicorn==20.0.4
 itsdangerous==0.24
-flask_restplus
 geojson
+flask_restplus
+pymongo
+dnspython
+pandas
+geopandas
+shapely
+geopy
