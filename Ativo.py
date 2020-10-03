@@ -6,6 +6,7 @@ from bson.objectid import ObjectId
 import json
 import nearest_fire as nf
 import motor_inferencia as inf
+import viirs_fires as viirs
 
 scon = "mongodb+srv://admin:adminadmin@cluster0.5oigr.gcp.mongodb.net/nasa-space-apps-challenge?w=majority"
 
@@ -27,8 +28,10 @@ def inferencia(id):
     base_estatistica = client.statistical_skope
     resultado = base_estatistica.ativos.find({"identificador": id}).sort("_id", -1).limit(1)
     result = resultado.next()
-    dist = nf.get_distancia(result)
     if result["identificador"] == id:
+        df = viirs.get_VIIRS_data()
+        dist = nf.get_distancia(df,result)
+        predito = inf.predicao(df,result,dist)
         retorno = (200, "Chamada de processamento estatístico não implementada")
     else:
         retorno = (417, "Conflito de ativo, realize o recadastramento do ativo.")
@@ -39,4 +42,5 @@ def inferencia(id):
     with open(i) as f:
         gj = geojson.load(f)
         gj.update(dist)
+        gj.update(predito)
     return gj

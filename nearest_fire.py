@@ -1,11 +1,10 @@
 import geopandas as gpd
 from shapely.ops import nearest_points
 from shapely.geometry import Point, MultiPoint
-import viirs_fires as viirs
+
 from geopy import distance
 
-def get_distancia(coodenadas):
-    df = viirs.get_VIIRS_data()
+def get_distancia(df,coodenadas):
     gdf = gpd.GeoDataFrame(df, geometry=gpd.points_from_xy(df.longitude, df.latitude))
     origem = gpd.points_from_xy(y=[coodenadas['address']['coordinates'][0][0]],
                                 x=[coodenadas['address']['coordinates'][0][1]])
