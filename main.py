@@ -49,8 +49,10 @@ class cadastro_ativo(Resource):
     def post(self,id):
         #json_data = request.get_json(force=True)
         json_data="teste_mock"
-        ret = atv.cadastrar_ativo(id,json_data)
-        return jsonify(mensagem=ret)
+        ret = atv.cadastrar_ou_retornar_ativo(id,json_data)
+        if ret[0] != 200:
+            abort(ret[0], description=ret[1])
+        return ret[1],ret[0]
 
     def get(self,id):
         return  atv.inferencia(id)
