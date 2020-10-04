@@ -14,6 +14,7 @@ RUN pip3 install --upgrade setuptools
 ADD ./requirements.txt ./
 ADD ./*.py ./
 ADD ./mock ./mock
+ADD ./data_viirs ./data_viirs
 RUN pip3 install -r requirements.txt
 EXPOSE 5000
 CMD python ./main.py

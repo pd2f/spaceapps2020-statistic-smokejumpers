@@ -20,6 +20,11 @@ parser = reqparse.RequestParser()
 def welcome():
     return redirect('/documentacao')
 
+@app.route("/get-data-viirs", methods=['GET'])
+def get_data_viirs():
+    obter = atv.data_viirs()
+    obter.obter_ultimo_arquivo()
+    return jsonify(mensage="Arquivo obtido.")
 
 app_infos = dict(version='1.0', title='Statistical SKOPE',
                  description='API para AI & ML do SKOPE',

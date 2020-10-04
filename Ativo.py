@@ -1,14 +1,17 @@
 import geojson
-import os
+
 from pymongo import MongoClient
-import dns
 from bson.objectid import ObjectId
 import json
 import nearest_fire as nf
 import motor_inferencia as inf
 import viirs_fires as viirs
+import weather
 
-scon = "mongodb+srv://admin:adminadmin@cluster0.5oigr.gcp.mongodb.net/nasa-space-apps-challenge?w=majority"
+scon =
+
+def data_viirs():
+    return viirs.DataVIIRS()
 
 def cadastrar_ou_retornar_ativo(id,gjson):
     client = MongoClient(scon)
@@ -29,18 +32,19 @@ def inferencia(id):
     resultado = base_estatistica.ativos.find({"identificador": id}).sort("_id", -1).limit(1)
     result = resultado.next()
     if result["identificador"] == id:
-        df = viirs.get_VIIRS_data()
+        dados_viirs = viirs.DataVIIRS()
+        df = dados_viirs.get_VIIRS_data()
         dist = nf.get_distancia(df,result)
+        lat = dist['geometry']['coordinates'][0]
+        lon = dist['geometry']['coordinates'][1]
+        clima = weather.get_weather(lat=lat, lon=lon)
         predito = inf.predicao(df,result,dist)
         retorno = (200, "Chamada de processamento estatístico não implementada")
     else:
         retorno = (417, "Conflito de ativo, realize o recadastramento do ativo.")
-    if id ==1 :
-        i = "./mock/Incendio1.json"
-    else:
-        i = "./mock/Incendio2.json"
-    with open(i) as f:
-        gj = geojson.load(f)
-        gj.update(dist)
-        gj.update(predito)
+    gj = {}
+    gj.update(predito)
+    gj.update(dist)
+    if clima is not None:
+        gj.update(clima)
     return gj
