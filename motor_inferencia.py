@@ -12,6 +12,12 @@ def predicao(df,ativo,distancia):
     retorno["data"] = dt_string
     return retorno
 
+def get_proc_cognitivo():
+ #TODO implementar integração com o modelo
+ #['radiacao_global_KJm2','vent_dir','vento_vel','precip_mm','umid_rel_ar','tem_pto_orv','temp_ar_bulbo_seco','press_atm']
+
+    return None
+
 def regra1(dist):
     if dist["distancia"] < 10:
         return 0
